@@ -17,7 +17,7 @@
       command: oc set env dc/easytravel-loadgen ET_PROBLEMS- -n travel-apps
       when: state == "OPEN"
     - name: Roll out latest deployment for easytravel-frontend
-      command: oc rollout latest dc/easytravel-frontend -n travel-app
+      command: oc rollout latest dc/easytravel-frontend -n travel-apps
       when: state == "OPEN"
     - name: Roll out latest deployment for easytravel-backend
       command: oc rollout latest dc/easytravel-backend -n travel-apps
