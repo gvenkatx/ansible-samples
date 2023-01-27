@@ -8,7 +8,7 @@
         msg: "{{pid}}"
     - name: Post comment to Dynatrace - Triggered Ansible playbook for remediation
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Triggered Ansible playbook to resolve problem\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
-      when: {{state}} == "OPEN"
+      when: "{{state}}" == "OPEN"
     - name: Login to OpenShift cluster
       command: oc login -u opentlc-mgr -p SlWBsd1OpQbvSJzS --insecure-skip-tls-verify https://api.cluster-f4zmk.f4zmk.sandbox2653.opentlc.com:6443
       when: {{state}} == "OPEN"
