@@ -7,7 +7,7 @@
       debug:
         msg: "{{pid}}"
       when: state == "OPEN"
-    - name: Post comment to Dynatrace - Triggered Ansible playbook for remediation
+    - name: Post comment to Dynatrace - triggered playbook
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Triggered Ansible playbook to resolve problem\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
       when: state == "OPEN"
     - name: Login to OpenShift cluster
@@ -22,10 +22,10 @@
     - name: Roll out latest deployment for easytravel-backend
       command: oc rollout latest dc/easytravel-backend -n travel-apps
       when: state == "OPEN"
-    - name: Post comment to Dynatrace - problem resolved
+    - name: Post comment to Dynatrace - playbook ran successfully
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Successfully ran Ansible playbook\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
       when: state == "OPEN"
-     - name: Post comment to Dynatrace - problem resolved
+    - name: Post comment to Dynatrace- problem resolved
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Problem has been RESOLVED\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
       when: state == "RESOLVED"
 
