@@ -6,7 +6,7 @@
     - name: Print Dynatrace ProblemId
       debug:
         msg: "{{pid}}"
-      when: "{{state}}" == "OPEN"
+      when: state == "OPEN"
     - name: Post comment to Dynatrace - Triggered Ansible playbook for remediation
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Triggered Ansible playbook to resolve problem\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
       when: "{{state}}" == "OPEN"
