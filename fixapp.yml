@@ -1,0 +1,20 @@
+---
+- name: Update environment variables and roll out latest deployment on OpenShift
+  hosts: all
+  connection: ssh
+  tasks:
+    - name: Print Dynatrace ProblemId
+      debug:
+        msg: "{{pid}}"
+    - name: Post comment to Dynatrace problem
+      shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Triggered Ansible playbook to resolve problem\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
+    - name: Login to OpenShift cluster
+      command: oc login -u opentlc-mgr -p SlWBsd1OpQbvSJzS --insecure-skip-tls-verify https://api.cluster-f4zmk.f4zmk.sandbox2653.opentlc.com:6443
+    - name: Set environment variable for deployment config
+      command: oc set env dc/easytravel-loadgen ET_PROBLEMS- -n travel-apps
+    - name: Roll out latest deployment for easytravel-frontend
+      command: oc rollout latest dc/easytravel-frontend -n travel-app
+    - name: Roll out latest deployment for easytravel-backend
+      command: oc rollout latest dc/easytravel-backend -n travel-apps
+    - name: Post comment to Dynatrace problem
+      shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Successfully finished running Ansible playbook for remediation\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"

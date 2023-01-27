@@ -1,0 +1,7 @@
+---
+- name: Update environment variables and roll out latest deployment on OpenShift
+  hosts: all
+  connection: ssh
+  tasks:
+    - name: Post comment to Dynatrace problem
+      shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Successfully ran Ansible playbook to resolve problem\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/-6675894282617507080_1674849420000V2/comments"
