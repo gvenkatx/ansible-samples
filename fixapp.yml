@@ -9,23 +9,23 @@
       when: state == "OPEN"
     - name: Post comment to Dynatrace - Triggered Ansible playbook for remediation
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Triggered Ansible playbook to resolve problem\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
-      when: "{{state}}" == "OPEN"
+      when: state == "OPEN"
     - name: Login to OpenShift cluster
       command: oc login -u opentlc-mgr -p SlWBsd1OpQbvSJzS --insecure-skip-tls-verify https://api.cluster-f4zmk.f4zmk.sandbox2653.opentlc.com:6443
-      when: {{state}} == "OPEN"
+      when: state == "OPEN"
     - name: Set environment variable for deployment config
       command: oc set env dc/easytravel-loadgen ET_PROBLEMS- -n travel-apps
-      when: {{state}} == "OPEN"
+      when: state == "OPEN"
     - name: Roll out latest deployment for easytravel-frontend
       command: oc rollout latest dc/easytravel-frontend -n travel-app
-      when: {{state}} == "OPEN"
+      when: state == "OPEN"
     - name: Roll out latest deployment for easytravel-backend
       command: oc rollout latest dc/easytravel-backend -n travel-apps
-      when: {{state}} == "OPEN"
+      when: state == "OPEN"
     - name: Post comment to Dynatrace - problem resolved
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Successfully ran Ansible playbook\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
-      when: {{state}} == "OPEN"
+      when: state == "OPEN"
      - name: Post comment to Dynatrace - problem resolved
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Problem has been RESOLVED\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
-      when: {{state}} == "RESOLVED"
+      when: state == "RESOLVED"
 
