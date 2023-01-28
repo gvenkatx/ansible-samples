@@ -16,12 +16,12 @@
     - name: Set environment variable for easyravel-loadgen deployment config to trigger new rollout
       command: oc set env dc/easytravel-loadgen ET_PROBLEMS=BadCacheSynchronization -n travel-apps
       when: state == "OPEN"
-    - name: Roll out latest deployment for easytravel-backend
-      command: oc rollout latest dc/easytravel-backend -n travel-apps
-      when: state == "OPEN"
-    - name: Roll out latest deployment for easytravel-frontend
-      command: oc rollout latest dc/easytravel-frontend -n travel-apps
-      when: state == "OPEN"
+    # - name: Roll out latest deployment for easytravel-backend
+    #   command: oc rollout latest dc/easytravel-backend -n travel-apps
+    #   when: state == "OPEN"
+    # - name: Roll out latest deployment for easytravel-frontend
+    #   command: oc rollout latest dc/easytravel-frontend -n travel-apps
+      # when: state == "OPEN"
     - name: Post comment to Dynatrace - playbook ran successfully
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Successfully ran Ansible playbook\"}' https://ygp64188.live.dynatrace.com/api/v2/problems/{{pid}}/comments"
       when: state == "OPEN"
