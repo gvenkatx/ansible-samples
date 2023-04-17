@@ -14,7 +14,7 @@
       command: oc login -u {{openshift_user}} -p {{openshift_pwd}} --insecure-skip-tls-verify {{openshift_api_url}}
       when: state == "OPEN"
     - name: Set environment variable for easyravel-loadgen deployment config to trigger new rollout
-      command: oc set env dc/easytravel-loadgen ET_PROBLEMS- ET_BACKEND_URL- -n travel-apps
+      command: oc set env dc/easytravel-loadgen ET_PROBLEMS- ET_BACKEND_URL- -n easytravel
       when: state == "OPEN"
     - name: Sleep for 60 seconds
       wait_for:
@@ -22,7 +22,7 @@
         timeout: 0
       when: state == "OPEN"
     - name: Roll out latest deployment for easytravel-backend
-      command: oc rollout latest dc/easytravel-backend -n travel-apps
+      command: oc rollout latest dc/easytravel-backend -n easytravel
       when: state == "OPEN"
     - name: Sleep for 60 seconds
       wait_for:
@@ -30,7 +30,7 @@
         timeout: 0
       when: state == "OPEN"
     - name: Roll out latest deployment for easytravel-frontend
-      command: oc rollout latest dc/easytravel-frontend -n travel-apps
+      command: oc rollout latest dc/easytravel-frontend -n easytravel
       when: state == "OPEN"
     - name: Post comment to Dynatrace - playbook ran successfully
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Successfully ran Ansible playbook\"}' {{dynatrace_api_url}}/v2/problems/{{pid}}/comments"
