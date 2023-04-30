@@ -38,7 +38,7 @@
                    -H 'Content-Type: application/json'
                    --data '{\"eventType\": \"CUSTOM_INFO\", \"title\": \"Problem Remediation\", \"timeout\": 30,
                             \"entitySelector\": \"type(SERVICE),entityName.equals(AuthenticationService)\",
-                            \"properties\": {\"Tool\": \"Ansible Automation Platform\"\}
+                            \"properties\": {\"Tool\": \"Ansible Automation Platform\"}'
               "
       when: state == "OPEN"
     - name: Post comment to Dynatrace - problem resolved
