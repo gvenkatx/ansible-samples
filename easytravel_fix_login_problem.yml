@@ -36,13 +36,10 @@
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Successfully ran Ansible playbook\"}' {{dynatrace_api_url}}/v2/problems/{{pid}}/comments"
       when: state == "OPEN"
     - name: Post Ansible info to Dynatrace Problem
-      shell: "curl --request POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' --url '{{dynatrace_api_url}}/v2/events/ingest' \
-                   -H 'Content-Type: application/json' \
-                   --data '{\"eventType\": \"CUSTOM_INFO\", \"title\": \"Problem Remediation\", \"timeout\": 30, \
-                            \"entitySelector\": \"type(SERVICE),entityName.equals(AuthenticationService)\", \
-                            \"properties\": {\"Tool\": \"Ansible Automation Platform\"}'"
+      shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"eventType\": \"CUSTOM_INFO\", \"title\": \"Problem Remediation\", \"timeout\": 30, \"entitySelector\": \"type(SERVICE),entityName.equals(AuthenticationService)\", \"properties\": \{\"Tool\": \"Ansible Automation Platform\"\}}' {{dynatrace_api_url}}/v2/events/ingest"
       when: state == "OPEN"
     - name: Post comment to Dynatrace - problem resolved
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Problem has been RESOLVED\"}' {{dynatrace_api_url}}/v2/problems/{{pid}}/comments"
       when: state == "RESOLVED"
 
+curl --request POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' --url '{{dynatrace_api_url}}/v2/events/ingest' -H 'Content-Type: application/json' --data '{\"eventType\": \"CUSTOM_INFO\", \"title\": \"Problem Remediation\", \"timeout\": 30}'
