@@ -48,9 +48,6 @@
             "title": "Problem Remediation",
             "timeout": 30,
             "entitySelector": "type(SERVICE),entityName.equals(AuthenticationService)"
-            "properties": {
-              "Tool": "Ansible Automation Platform"
-            }
           }
         return_content: yes
         status_code: 201
