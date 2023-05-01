@@ -49,8 +49,7 @@
             "timeout": 30,
             "entitySelector": "type(SERVICE),entityName.equals(AuthenticationService)"
             "properties": {
-              "dt.event.source": "Ansible Automation Platform"
-              "dt.event.deployment.ci_back_link": "https://aap-controller-aap.apps.cluster-s4xs2.s4xs2.sandbox2718.opentlc.com/#/templates/job_template/10/details"
+              "Source": "Ansible Automation Platform"
             }
           }
         return_content: yes
