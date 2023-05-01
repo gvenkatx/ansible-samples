@@ -37,7 +37,7 @@
       when: state == "OPEN"
     - name: Post Ansible info to Dynatrace Problem
       uri:
-        url: "{{dynatrace_api_url}}"/v2/events/ingest
+        url: "{{dynatrace_api_url}}/v2/events/ingest"
         method: POST
         headers:
           Authorization: "Api-Token {{dynatrace_api_token}}"
