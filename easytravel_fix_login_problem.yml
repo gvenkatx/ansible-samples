@@ -7,9 +7,6 @@
       debug:
         msg: "{{pid}}"
       when: state == "OPEN"
-    - name: Get Dynatrace event properties
-      shell: "curl --request GET --header 'Authorization: Api-Token {{dynatrace_api_token}}' {{dynatrace_api_url}}/v2/eventProperties"
-      when: state == "OPEN"
     - name: Post comment to Dynatrace - triggered playbook
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Triggered Ansible playbook to resolve problem\"}' {{dynatrace_api_url}}/v2/problems/{{pid}}/comments"
       when: state == "OPEN"
@@ -48,9 +45,13 @@
         body: |-
           {
             "eventType": "CUSTOM_DEPLOYMENT",
-            "title": "Ansible Problem Remediation",
+            "title": "Problem Remediation",
             "timeout": 30,
             "entitySelector": "type(SERVICE),entityName.equals(AuthenticationService)"
+            "properties": {
+              "dt.event.source": "Ansible Automation Platform"
+              "dt.event.deployment.ci_back_link": "https://aap-controller-aap.apps.cluster-s4xs2.s4xs2.sandbox2718.opentlc.com/#/templates/job_template/10/details"
+            }
           }
         return_content: yes
         status_code: 201
