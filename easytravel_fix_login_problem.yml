@@ -44,7 +44,7 @@
           Content-Type: "application/json"
         body: |-
           {
-            "eventType": "CUSTOM_INFO",
+            "eventType": "CUSTOM_DEPLOYMENT",
             "title": "Problem Remediation",
             "timeout": 30,
             "entitySelector": "type(SERVICE),entityName.equals(AuthenticationService)"
