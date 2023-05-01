@@ -45,12 +45,9 @@
         body: |-
           {
             "eventType": "CUSTOM_DEPLOYMENT",
-            "title": "Problem Remediation",
+            "title": "Ansible Problem Remediation",
             "timeout": 30,
             "entitySelector": "type(SERVICE),entityName.equals(AuthenticationService)"
-            "properties": {
-              "source": "Ansible Automation Platform"
-            }
           }
         return_content: yes
         status_code: 201
