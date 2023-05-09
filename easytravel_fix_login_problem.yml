@@ -52,7 +52,6 @@
         return_content: yes
         status_code: 201
       #shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"eventType\": \"CUSTOM_INFO\", \"title\": \"Problem Remediation\", \"timeout\": 30, \"entitySelector\": \"type(SERVICE),entityName.equals(AuthenticationService)\"}' {{dynatrace_api_url}}/v2/events/ingest"
-      when: state == "OPEN"
+      when: state == "RESOLVED"
     - name: Post comment to Dynatrace - problem resolved
       shell: "curl -X POST --header 'Authorization: Api-Token {{dynatrace_api_token}}' -H 'Content-Type: application/json' -d '{\"message\": \"Problem has been RESOLVED\"}' {{dynatrace_api_url}}/v2/problems/{{pid}}/comments"
-      when: state == "RESOLVED"
