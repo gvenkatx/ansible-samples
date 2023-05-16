@@ -1,5 +1,8 @@
 ---
-- hosts: all
+- name: Create app login problem
+  hosts: all
+  connection: ssh
+  tasks:
     - name: Login to OpenShift cluster
       command: oc login -u {{openshift_user}} -p {{openshift_pwd}} --insecure-skip-tls-verify {{openshift_api_url}}
     - name: Set environment variable for deployment config
