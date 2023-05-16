@@ -3,9 +3,9 @@
   tasks:
   - name: Get access token  
     k8s_auth:  
-      username: {{openshift_user}}
-      password: {{openshift_pwd}}
-      host: {{openshift_api_url}}
+      username: "{{openshift_user}}"
+      password: "{{openshift_pwd}}"
+      host: "{{openshift_api_url}}"
       validate_certs: no 
     register: k8s_auth_results
   - name: Create a namespace with token  
