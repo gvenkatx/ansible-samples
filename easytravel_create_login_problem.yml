@@ -2,18 +2,18 @@
 - hosts: all
 
   collections: 
-    - community.kubernetes
+    - kubernetes.core
   
   tasks:
   - name: Get access token  
-    community.kubernetes.k8s_auth:  
+    kubernetes.core.k8s_auth:  
       username: "{{openshift_user}}"
       password: "{{openshift_pwd}}"
       host: "{{openshift_api_url}}"
       validate_certs: no 
     register: k8s_auth_results
   - name: Create a namespace with token  
-    community.kubernetes.k8s:  
+    kubernetes.core.k8s:  
       api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"  
       name: testnamespace
       kind: Namespace  
