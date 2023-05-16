@@ -5,5 +5,8 @@
   tasks:
     - name: Login to OpenShift cluster
       command: oc login -u {{openshift_user}} -p {{openshift_pwd}} --insecure-skip-tls-verify {{openshift_api_url}}
-    - name: Set environment variable for deployment config
-      command: oc set env dc/easytravel-loadgen ET_BACKEND_URL=http://easytravel-www:8080 ET_PROBLEMS=LoginProblems -n easytravel
+    - name: Print debug message
+      debug:
+        msg: "Successful login"
+    #- name: Set environment variable for deployment config
+      #command: oc set env dc/easytravel-loadgen ET_BACKEND_URL=http://easytravel-www:8080 ET_PROBLEMS=LoginProblems -n easytravel
