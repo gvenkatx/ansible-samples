@@ -1,21 +1,19 @@
 ---
-- name: Login to OpenShift cluster
-  hosts: all
-  connection: ssh
+- hosts: all
   tasks:
-    - name: Get access token  
-      k8s_auth:  
-        username: {{openshift_user}}
-        password: {{openshift_pwd}}
-        host: {{openshift_api_url}}
-        validate_certs: true 
-      register: k8s_auth_results
-    - name: Create a namespace with token  
-      k8s:  
-        api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"  
-        name: testnamespace
-        kind: Namespace  
-        state: present
+  - name: Get access token  
+    k8s_auth:  
+      username: {{openshift_user}}
+      password: {{openshift_pwd}}
+      host: {{openshift_api_url}}
+      validate_certs: no 
+    register: k8s_auth_results
+  - name: Create a namespace with token  
+    k8s:  
+      api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"  
+      name: testnamespace
+      kind: Namespace  
+      state: present
     #- name: Login to OpenShift cluster
       #command: oc login -u {{openshift_user}} -p {{openshift_pwd}} --insecure-skip-tls-verify {{openshift_api_url}}
     #- name: Set environment variable for deployment config
